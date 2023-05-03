@@ -8,17 +8,51 @@
 </head>
 <body>
     <script>
+        /*Computer chooses*/
         function getComputerChoice(){
             let choice = Math.random()
             if (choice < 0.33){
-                return "Rock"
+                return "rock"
             } else if (choice < 0.66) {
-                return "Paper"
+                return "paper"
             } else {
-                return "Scissors"
+                return "scissors"
             }
         }
-        console.log(getComputerChoice())
+        /*Play a round*/
+        function playRound(playerSelection, computerSelection){
+       
+            switch (playerSelection){
+                case "rock":
+                    if (computerSelection == "paper"){
+                        return "You lose! Computer chose " + computerSelection
+                    } else if (computerSelection == "scissors") {
+                        return "You win! Computer chose " + computerSelection
+                    } else {
+                        return "It's a tie! You both chose " + computerSelection 
+                    }
+                    break;
+                case "paper":    
+                    if (computerSelection == "scissors"){
+                        return "You lose! Computer chose " + computerSelection
+                    } else if (computerSelection == "rock") {
+                        return "You win! Computer chose " + computerSelection
+                    } else {
+                        return "It's a tie! You both chose " + computerSelection 
+                    }
+                    break;
+                case "scissors":
+                 if (computerSelection == "rock"){
+                        return "You lose! Computer chose " + computerSelection
+                    } else if (computerSelection == "paper") {
+                        return "You win! Computer chose " + computerSelection
+                    } else {
+                        return "It's a tie! You both chose " + computerSelection 
+                    }
+                    break;
+            }
+        }
+        console.log(playRound(prompt("rock, paper or scissors?",getComputerChoice()),getComputerChoice()))
     </script>
 </body>
 </html>
