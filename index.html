@@ -5,8 +5,66 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>R-P-S</title>
+    <style>
+        #scoreBoard{
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content:space-around;
+            align-items: center;
+            gap: 5px;
+            
+        }
+        .titles{
+            text-align: center;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 50px;
+            justify-content: end;
+        }
+        .titles > * {
+            margin-bottom: 0px;
+        }
+
+        .scores{
+            text-align: center;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 120px;
+            justify-content: baseline;
+        }
+
+        h1{
+            text-align: center;
+        }
+
+        .buttons{
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
+    <h1>Rock Paper Scissors</h1>
+    <div class="buttons">
+        <button id="rock">Rock</button>
+        <button id="paper">Paper</button>
+        <button id="scissors">Scissors</button>
+    </div>
+    <div id="scoreBoard">
+        <div class="titles">
+            <h2>You </h2>
+            <h2>Computer</h2>
+        </div>
+        <div class="scores">
+            <h2 id="playerScore">0</h2>
+            <h2 id="computerScore">0</h2>
+        </div>
+        <p id="gameLog">
+
+        </p>
+    </div>    
     <script>
         /*Computer chooses*/
         function getComputerChoice(){
@@ -19,56 +77,101 @@
                 return "scissors"
             }
         }
-        /*Play a round*/
+
+        const gameLog = document.querySelector("#gameLog")
+        const scorePlayer = document.querySelector("#playerScore")
+        const scorePC = document.querySelector("#computerScore")
+        let playerScore=0
+        let computerScore=0
+        /*playRound function returns:
+         1 if player won,
+        -1 if computer won, 
+        0 in case of Tie or incorrect input*/
         function playRound(playerSelection, computerSelection){
-            playerSelection = playerSelection.toLowerCase()
-            switch (playerSelection){
-                case "rock":
-                    if (computerSelection == "paper"){
-                        console.log("You lose! Computer chose " + computerSelection)
-                        return -1
-                    } else if (computerSelection == "scissors") {
-                        console.log("You win! Computer chose " + computerSelection)
-                        return 1
-                    } else {
-                        console.log("It's a tie! You both chose " + computerSelection)
-                        return 0 
-                    }
-                    break;
-                case "paper":    
-                    if (computerSelection == "scissors"){
-                        console.log("You lose! Computer chose " + computerSelection)
-                        return -1
-                    } else if (computerSelection == "rock") {
-                        console.log("You win! Computer chose " + computerSelection)
-                        return 1
-                    } else {
-                        console.log("It's a tie! You both chose " + computerSelection)
-                        return 0 
-                    }
-                    break;
-                case "scissors":
-                 if (computerSelection == "rock"){
-                        console.log("You lose! Computer chose " + computerSelection)
-                        return -1
-                    } else if (computerSelection == "paper") {
-                        console.log("You win! Computer chose " + computerSelection)
-                        return 1
-                    } else {
-                        console.log("It's a tie! You both chose " + computerSelection)
-                        return 0 
-                    }
-                    break;
-                default:    
+        
+        
+            
+                switch (playerSelection){
+                    case "rock":
+                        if (computerSelection == "paper"){
+                            gameLog.textContent = "You lose! Computer chose " + computerSelection
+                            computerScore++
+                            
+                        } else if (computerSelection == "scissors") {
+                            gameLog.textContent = "You win! Computer chose " + computerSelection
+                            playerScore++
+                            } else {
+                            gameLog.textContent = "It's a tie! You both chose " + computerSelection
+                        }
+                        break;
+                    case "paper":    
+                        if (computerSelection == "scissors"){
+                            gameLog.textContent = "You lose! Computer chose " + computerSelection
+                            computerScore++
+                            
+                        } else if (computerSelection == "rock") {
+                            gameLog.textContent = "You win! Computer chose " + computerSelection
+                            playerScore++
+                            scorePlayer.textContent = playerScore
+                        } else {
+                            gameLog.textContent = "It's a tie! You both chose " + computerSelection
+                        }
+                        break;
+                    case "scissors":
+                    if (computerSelection == "rock"){
+                            gameLog.textContent = "You lose! Computer chose " + computerSelection
+                            computerScore++
+                            scorePC.textContent = computerScore
+                        } else if (computerSelection == "paper") {
+                            gameLog.textContent = "You win! Computer chose " + computerSelection
+                            playerScore++
+                            scorePlayer.textContent = playerScore
+                        } else {
+                            gameLog.textContent = "It's a tie! You both chose " + computerSelection
+                        }
+                        break;
+                /*default:    
                     console.error("Invalid selection: " + playerSelection)
-                    return 0 
-                }   
+                    return 0 */
+                }
+            
+            
+            if (computerScore == 5){
+                gameLog.textContent = "Computer won, humanity is doomed"
+                
+            } else if (playerScore == 5){
+                gameLog.textContent = "You won! You beat a computer at R-P-S"
+            }   
 
         }
+
+                 
+        const rock = document.querySelector("#rock")
+        const paper = document.querySelector("#paper")
+        const scissors = document.querySelector("#scissors")
+
+
+            rock.addEventListener("click", function(){
+                playerSelection = "rock"
+                playRound(playerSelection,getComputerChoice())
+                scorePC.textContent = computerScore
+                scorePlayer.textContent = playerScore})
+
+            paper.addEventListener("click", function(){
+                playerSelection = "paper"
+                playRound(playerSelection,getComputerChoice())
+                scorePC.textContent = computerScore
+                scorePlayer.textContent = playerScore})
+            
+            scissors.addEventListener("click", function(){
+                playerSelection = "scissors"
+                playRound(playerSelection,getComputerChoice())
+                scorePC.textContent = computerScore
+                scorePlayer.textContent = playerScore})
         
         /*Play r-p-s, first to 5 wins*/
         
-        function game(){
+        /*function game(){
             let playerScore=0
             let computerScore=0
             while (playerScore < 5 && computerScore < 5){
@@ -90,7 +193,7 @@
                 console.log("You won! You beat a computer at R-P-S")
             }
         }
-        game()
+        game() */
     </script>
 </body>
 </html>
