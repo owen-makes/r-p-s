@@ -135,12 +135,27 @@
                     return 0 */
                 }
             
-            
+            const btns = document.querySelectorAll("button")
+
             if (computerScore == 5){
                 gameLog.textContent = "Computer won, humanity is doomed"
-                
+                btns.forEach(btn => {
+                    btn.disabled = true
+                });
+                gameLog.innerHTML += "<div><button class='restart'>Play Again?</button></div>"
+                document.querySelector('.restart').addEventListener('click',function(){
+                    location.reload()
+                })
+
             } else if (playerScore == 5){
                 gameLog.textContent = "You won! You beat a computer at R-P-S"
+                btns.forEach(btn => {
+                    btn.disabled = true
+                })
+                gameLog.innerHTML += "<div><button class='restart'>Play Again?</button></div>"
+                document.querySelector('.restart').addEventListener('click',function(){
+                    location.reload()
+                })
             }   
 
         }
@@ -169,6 +184,9 @@
                 scorePC.textContent = computerScore
                 scorePlayer.textContent = playerScore})
         
+            
+
+
         /*Play r-p-s, first to 5 wins*/
         
         /*function game(){
